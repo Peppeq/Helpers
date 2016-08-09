@@ -1,0 +1,39 @@
+﻿@model HelperMethods.Models.Person
+
+@{
+    ViewBag.Title = "CreatePerson";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<h2>CreatePerson</h2>
+
+@using (Html.BeginRouteForm("FormRoute", new { }, FormMethod.Post,
+new { @class = "personClass", data_formType = "person" }))
+{
+    <div class="dataElem">
+        <label>PersonId</label>
+        <input name="personId" value="@Model.PersonId"/>
+        @Html.TextBox("personId", @Model.PersonId)
+    </div>
+    <div class="dataElem">
+        <label>First Name</label>
+        @Html.TextBox("firstName", @Model.FirstName)
+    </div>
+    <div class="dataElem">
+        <label>Last Name</label>
+        @Html.TextBox("lastName", @Model.LastName)
+        @Html.TextBoxFor(x => x.LastName)
+    </div>
+    <div class="dataElem">
+        <label>Role</label>
+        @Html.DropDownListFor(m => m.Role,
+            new SelectList(Enum.GetNames(typeof(HelperMethods.Models.Role))))
+    </div>
+    <input type="submit" value="Submit" />
+}
+
+
+@Html.DropDownList("myList", new SelectList(new[] { "A", "B" }, "C"), "Choose")
+
+
+
