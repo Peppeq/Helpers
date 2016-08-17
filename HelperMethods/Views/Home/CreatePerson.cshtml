@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "CreatePerson";
     Layout = "/Views/Shared/_Layout.cshtml";
+    Html.EnableClientValidation(false);
 }
 
 <h2>CreatePerson</h2>
@@ -12,28 +13,34 @@ new { @class = "personClass", data_formType = "person" }))
 {
     <div class="dataElem">
         <label>PersonId</label>
-        <input name="personId" value="@Model.PersonId"/>
-        @Html.TextBox("personId", @Model.PersonId)
+        @Html.Editor("PersonId")
     </div>
     <div class="dataElem">
         <label>First Name</label>
-        @Html.TextBox("firstName", @Model.FirstName)
+        @Html.Editor("FirstName")
     </div>
     <div class="dataElem">
         <label>Last Name</label>
-        @Html.TextBox("lastName", @Model.LastName)
-        @Html.TextBoxFor(x => x.LastName)
+        @Html.EditorFor(m => m.LastName)
     </div>
     <div class="dataElem">
         <label>Role</label>
-        @Html.DropDownListFor(m => m.Role,
-            new SelectList(Enum.GetNames(typeof(HelperMethods.Models.Role))))
+        @Html.EditorFor(m => m.Role)
+    </div>
+    <div class="dataElem">
+        <label>Birth Date</label>
+        @Html.EditorFor(m => m.BirthDate)
     </div>
     <input type="submit" value="Submit" />
 }
 
 
-@Html.DropDownList("myList", new SelectList(new[] { "A", "B" }, "C"), "Choose")
+<h2>CreatePerson: @Html.LabelForModel()</h2>
 
+@using (Html.BeginRouteForm("FormRoute", new { }, FormMethod.Post,
+new { @class = "personClass", data_formType = "person" }))
+{
+    @Html.EditorForModel()
 
-
+    <input type="submit" value="Submit" />
+}
